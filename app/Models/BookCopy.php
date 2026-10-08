@@ -1,0 +1,4 @@
+<?php
+namespace App\Models;
+use App\Enums\BookCopyStatus; use Illuminate\Database\Eloquent\Factories\HasFactory; use Illuminate\Database\Eloquent\Model;
+class BookCopy extends Model { use HasFactory; protected $fillable=['book_id','public_id','status','current_bookpoint_id','current_reader_id','added_by','taken_at']; protected $casts=['status'=>BookCopyStatus::class,'taken_at'=>'datetime']; public function book(){return $this->belongsTo(Book::class);} public function bookPoint(){return $this->belongsTo(BookPoint::class,'current_bookpoint_id');} public function reader(){return $this->belongsTo(User::class,'current_reader_id');} public function addedBy(){return $this->belongsTo(User::class,'added_by');} public function sticker(){return $this->hasOne(Sticker::class);} public function movements(){return $this->hasMany(BookMovement::class);}}
