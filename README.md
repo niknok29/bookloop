@@ -1,44 +1,43 @@
 # BookLoop
 
-Universitet daxilində fiziki “Götür–Qoy” BookPoint rəflərini aktivləşdirən web-first platformadır.
+BookLoop universitet daxilində fiziki “Götür–Qoy” BookPoint rəflərini aktivləşdirən web-first platformadır.
 
-> **Cari vəziyyət:** README docs/readme-onboarding branch-ində hazırlanır. Laravel foundation faylları hazırda feature/foundation branch-indədir. Foundation develop-ə merge olunandan sonra aşağıdakı addımlar develop üzərində işləyəcək. Bu branch-də Laravel faylları yoxdursa, əvvəlcə foundation Pull Request-inin merge olunmasını gözləyin.
+> **Cari vəziyyət:** EnvKit istifadə edən Windows development mühiti üçün bu onboarding guide-dır. Laravel foundation faylları checkout-da yoxdursa, əvvəlcə foundation dəyişikliklərinin develop branch-inə merge olunduğunu yoxlayın.
 
 ## Mündəricat
 
 - [BookLoop nədir?](#bookloop-nədir)
 - [MVP statusu](#mvp-statusu)
 - [Texnologiyalar](#texnologiyalar)
+- [EnvKit](#envkit)
 - [Başlamazdan əvvəl](#başlamazdan-əvvəl)
 - [Repository-ni yükləmək](#repository-ni-yükləmək)
 - [İlk quraşdırma](#ilk-quraşdırma)
 - [Database](#database)
-- [Gündəlik Git prosesi](#gündəlik-git-prosesi)
-- [Git terminləri](#git-terminləri)
-- [Komanda bölgüsü](#komanda-bölgüsü)
-- [Codex ilə işləmək](#codex-ilə-işləmək)
-- [Test və troubleshooting](#test-və-troubleshooting)
+- [Gündəlik iş prosesi](#gündəlik-iş-prosesi)
+- [Komanda və Codex](#komanda-və-codex)
+- [Test və xətalar](#test-və-xətalar)
 - [Təhlükəsizlik](#təhlükəsizlik)
 - [İlk gün checklist](#ilk-gün-checklist)
 - [Faydalı sənədlər](#faydalı-sənədlər)
 
 ## BookLoop nədir?
 
-BookLoop kitabxana idarəetmə sistemi deyil. Universitetdəki fiziki BookPoint rəflərini tələbələr arasında paylaşım platforması ilə əlaqələndirir.
+BookLoop kitabxana idarəetmə sistemi deyil. Fiziki BookPoint rəflərini tələbələr arasında paylaşım platforması ilə əlaqələndirir.
 
-Axın: fiziki BookPoint mövcud olur; kitaba unikal sticker ID və QR kod verilir; tələbə kitabı rəfə əlavə edir; başqa tələbə kitabı götürür; kitab istənilən aktiv BookPoint-ə qoyula bilər; hərəkətlər tarixçədə saxlanılır; wishlist, bildiriş, coin və XP iştirakçılığı dəstəkləyir.
+Axın: kitaba unikal sticker ID və QR kod verilir; tələbə kitabı BookPoint-ə qoyur; başqa tələbə götürür; kitab istənilən aktiv BookPoint-ə qoyula bilər; hərəkətlər tarixçədə saxlanılır; wishlist, bildiriş, coin və XP iştirakçılığı dəstəkləyir.
 
-Bütün funksiyalar hələ hazır deyil. Take/put, QR scanner, wishlist notification, reminder, reward logic və admin CRUD foundation-dan sonrakı işlərdir.
+Take/put, QR scanner, wishlist notification, reminder, reward logic və admin CRUD foundation mərhələsindən sonrakı işlərdir.
 
 ## MVP statusu
 
-feature/foundation branch-indəki foundation:
+Foundation aşağıdakıları nəzərdə tutur:
 
 - Laravel 12, Blade, Tailwind, Vite və Livewire;
 - registration, login, logout və qorunan dashboard;
 - User, Book, BookCopy, BookPoint, Sticker, BookMovement, Wishlist, CoinTransaction və XpTransaction modelləri;
-- migration, foreign key, index, relationship və uniqueness qaydaları;
-- deterministic seed data və PHPUnit foundation testləri;
+- migration, relationship, foreign key, index və uniqueness qaydaları;
+- seed data və PHPUnit testləri;
 - docs/ daxilində architecture, database, setup, Git workflow, ownership və API contract.
 
 Hələ tamamlanmayıb: take/put Actions və Services, BookPoint CRUD, sticker/QR axını, wishlist matching, notifications, 10 günlük reminder, Coin/XP qaydaları, Filament admin və production PWA.
@@ -47,61 +46,112 @@ Hələ tamamlanmayıb: take/put Actions və Services, BookPoint CRUD, sticker/QR
 
 | Texnologiya | İzah |
 |---|---|
-| PHP | Laravel-in proqramlaşdırma dili. |
-| Laravel 12 | Routing, authentication, migrations, testing və backend skeleti. |
-| Composer | PHP dependency-lərinin quraşdırıcısı. |
-| PostgreSQL | Tövsiyə olunan əsas database. |
-| SQLite | Lokal/test fallback database. |
-| Blade | Server-side HTML template sistemi. |
-| Livewire | Blade üçün interaktiv komponentlər; dependency kimi quraşdırılıb. |
-| Tailwind CSS | CSS class-ları ilə responsive dizayn. |
-| Alpine.js | Hazırkı package.json-da yoxdur; planlaşdırıla bilər. |
-| Vite | CSS və JavaScript build aləti. |
-| Node.js/npm | Frontend dependency və build mühiti. |
-| Git/GitHub | Tarixçə, branch, review və Pull Request. |
+| PHP | Laravel-in proqramlaşdırma dilidir. EnvKit bu kompüterdə PHP 8.5.9 təqdim edir. |
+| Laravel 12 | Routing, authentication, migration, testing və backend skeletidir. |
+| Composer | PHP dependency-lərini quraşdırır. EnvKit site üçün PHP ilə işlədə bilər. |
+| PostgreSQL | Tövsiyə olunan əsas database-dir; EnvKit-də 14.23 quraşdırılıb. |
+| SQLite | Lokal/test fallback database-dir; EnvKit tərəfindən idarə edilmir. |
+| Blade | Server-side HTML template sistemidir. |
+| Livewire | Blade üçün interaktiv komponentdir və foundation dependency-lərindədir. |
+| Tailwind CSS | Responsive dizayn üçün CSS framework-dür. |
+| Alpine.js | Hazırkı package.json-da yoxdur; özbaşına əlavə etməyin. |
+| Vite | CSS və JavaScript build edir. |
+| Node.js/npm | Frontend dependency və build mühitidir; EnvKit-də Node.js quraşdırılmayıb. |
+| Git/GitHub | Kod tarixçəsi, branch, review və Pull Request üçündür. |
 
-Əlavə dependency uydurma; əvvəl composer.json və package.json-a bax.
+## EnvKit
+
+Bu kompüterdə real yoxlama:
+
+- EnvKit release: 0.33.0-beta.37;
+- Qeyd: bəzi terminallarda `envkit --version` ayrıca CLI wrapper versiyasını (`0.1.0`) göstərə bilər. Bu rəqəm EnvKit release versiyası ilə eyni olmaya bilər;
+- quraşdırma yeri: C:\ProgramData\envkit;
+- projects directory: C:\Users\acer\Desktop\PHPProject;
+- Nginx: 1.28.0;
+- PHP: 8.5.9;
+- PostgreSQL: 14.23, port 5432;
+- BookLoop EnvKit sites siyahısında mövcuddur;
+- Node.js, Redis, Memcached və Mailpit EnvKit-də quraşdırılmayıb.
+
+EnvKit PHP, Composer, Laravel Artisan, Nginx, PostgreSQL, site registration, PATH, host/config apply və servis statusuna kömək edir. EnvKit Node/npm dependency-lərini, Laravel .env dəyərlərini, APP_KEY, migration, seed və BookLoop biznes məntiqini sizin yerinizə konfiqurasiya etmir.
+
+EnvKit installer/download URL-i repository-də yoxdur. Buna görə README uydurma installer command vermir. EnvKit quraşdırılmayıbsa, təsdiqlənmiş installer-i IT sahibindən və ya komanda rəhbərindən alın.
+
+Yoxlama:
+
+    envkit --version
+    envkit --help
+    envkit sites
+    envkit status
+    envkit services
+
+İlkin config/data qovluqları:
+
+    envkit init
+
+Servis və host/config idarəsi:
+
+    envkit start nginx php-fpm postgres
+    envkit status
+    envkit apply
+
+Dayandırmaq üçün:
+
+    envkit stop nginx php-fpm postgres
+
+EnvKit-in servis idarə etdiyini yoxlayın; hər servisi kor-koranə başlatmayın. BookLoop üçün PostgreSQL və Nginx kifayətdir.
 
 ## Başlamazdan əvvəl
 
-Windows üçün quraşdır: [Git](https://git-scm.com/download/win), [PHP](https://windows.php.net/download/), [Composer](https://getcomposer.org/download/), [Node.js LTS](https://nodejs.org/en/download), [PostgreSQL](https://www.postgresql.org/download/windows/) və [VS Code](https://code.visualstudio.com/download).
+Windows 10/11-də quraşdırın:
+
+- [Git for Windows](https://git-scm.com/download/win)
+- [Visual Studio Code](https://code.visualstudio.com/download)
+- [Node.js LTS](https://nodejs.org/en/download)
+- PHP və Composer üçün komanda standartı EnvKit-dir.
+- PostgreSQL üçün komanda standartı EnvKit-dir.
 
 Faydalı VS Code extension-ları: PHP Intelephense, Laravel Blade Snippets, Tailwind CSS IntelliSense, DotENV və GitLens.
 
-PowerShell-də yoxla:
+PowerShell:
 
     git --version
-    php -v
-    composer --version
+    envkit --version
+    envkit php -v
+    envkit composer --version
     node -v
     npm -v
 
-not recognized xətası proqramın quraşdırılmadığını və ya PATH-ə əlavə edilmədiyini göstərir. Installer-də Add to PATH seçimini yoxla, PowerShell-i bağla və yenidən aç. npm üçün Node.js LTS-i repair/reinstall et.
+envkit, php və ya composer tanınmırsa EnvKit və ya PATH problemi var. node/npm tanınmırsa Node.js LTS ayrıca quraşdırılmalıdır.
 
 ## Repository-ni yükləmək
 
-GitHub collaborator dəvətini qəbul et. Sonra:
+GitHub collaborator dəvətini qəbul edin:
 
     New-Item -ItemType Directory -Force C:\Users\$env:USERNAME\Desktop\PHPProject | Out-Null
     Set-Location C:\Users\$env:USERNAME\Desktop\PHPProject
     git clone https://github.com/niknok29/bookloop.git
     Set-Location .\bookloop
-    git branch -a
     git switch develop
     git pull --ff-only origin develop
 
-Foundation hələ develop-ə merge edilməyibsə, müvəqqəti git switch feature/foundation istifadə et.
+Foundation hələ develop-də deyilsə, müvəqqəti:
+
+    git switch feature/foundation
 
 ## İlk quraşdırma
 
-Repository kökündə ol:
+Repository root-da artisan, composer.json və package.json olmalıdır:
 
-    Set-Location C:\Users\$env:USERNAME\Desktop\PHPProject\bookloop
+    Set-Location C:\Users\acer\Desktop\PHPProject\bookloop
     Get-ChildItem artisan,composer.json,package.json
-    composer install
+
+EnvKit project-aware komandaları:
+
+    envkit composer install
     npm install
     Copy-Item .env.example .env
-    php artisan key:generate
+    envkit artisan key:generate
 
 Runtime qovluqları lazım olarsa:
 
@@ -112,21 +162,28 @@ Runtime qovluqları lazım olarsa:
     New-Item -ItemType Directory -Force storage\framework\views | Out-Null
     New-Item -ItemType Directory -Force storage\logs | Out-Null
 
-.env-də database-ni konfiqurasiya et, sonra:
+BookLoop-u EnvKit site kimi qeydiyyata almaq üçün:
 
-    php artisan migrate --seed
+    envkit sites-link C:\Users\acer\Desktop\PHPProject\bookloop
+    envkit sites
+    envkit apply
+
+sites-link faylları köçürmür, sadəcə mövcud qovluğu qeydiyyata alır. Sonra .env database dəyərlərini doldurun:
+
+    envkit artisan migrate --seed
     npm run build
-    php artisan serve
+    envkit artisan serve
 
-Ayrıca terminalda npm run dev işlət. Hər iki terminal açıq qalsın. Brauzer: http://127.0.0.1:8000.
+Ayrı terminalda npm run dev saxlayın. Brauzer: http://127.0.0.1:8000. EnvKit host mapping tətbiq olunubsa http://bookloop.test də işləyə bilər.
 
 ## Database
 
 ### PostgreSQL — tövsiyə olunan
 
-pgAdmin və ya psql-də database yarat:
+    envkit start postgres
+    envkit status
 
-    CREATE DATABASE bookloop;
+EnvKit PostgreSQL servisinin process və portunu idarə edir, lakin database adı və credential yaratma qaydasını repository müəyyən etmir. pgAdmin və ya psql ilə lokal bookloop database yaradın.
 
 .env:
 
@@ -134,14 +191,18 @@ pgAdmin və ya psql-də database yarat:
     DB_HOST=127.0.0.1
     DB_PORT=5432
     DB_DATABASE=bookloop
-    DB_USERNAME=postgres
-    DB_PASSWORD=sənin_passwordun
+    DB_USERNAME=lokal_username
+    DB_PASSWORD=lokal_password
     CACHE_STORE=file
     SESSION_DRIVER=file
 
-Sonra php artisan migrate --seed. connection refused zamanı PostgreSQL service, port, username və password-u yoxla.
+Sonra:
+
+    envkit artisan migrate --seed
 
 ### SQLite — sürətli fallback
+
+EnvKit SQLite yaratmır:
 
     New-Item -ItemType File -Force database\database.sqlite | Out-Null
 
@@ -152,16 +213,18 @@ Sonra php artisan migrate --seed. connection refused zamanı PostgreSQL service,
     CACHE_STORE=file
     SESSION_DRIVER=file
 
-Sonra php artisan migrate --seed. .env və database/database.sqlite commit olunmur. Vacib database-də migrate:fresh işlətmə; bütün cədvəlləri silir.
+Sonra envkit artisan migrate --seed. .env və database/database.sqlite commit edilmir. Vacib database-də migrate:fresh işlətməyin.
 
-## Gündəlik Git prosesi
+## Gündəlik iş prosesi
 
-    Set-Location C:\Users\$env:USERNAME\Desktop\PHPProject\bookloop
+    Set-Location C:\Users\acer\Desktop\PHPProject\bookloop
+    envkit status
     git switch develop
     git pull --ff-only origin develop
     git switch -c feature/bookpoint-crud
-    php artisan test
+    envkit artisan test
     npm run build
+    envkit artisan route:list
     git status
     git diff
     git add app routes tests
@@ -169,24 +232,24 @@ Sonra php artisan migrate --seed. .env və database/database.sqlite commit olunm
     git commit -m "feat: add bookpoint crud foundation"
     git push -u origin feature/bookpoint-crud
 
-GitHub-da feature branch-dən develop-ə Pull Request aç. main və develop-ə birbaşa push etmə.
+GitHub-da feature branch-dən develop-ə Pull Request açın. main və develop-ə birbaşa push etməyin.
 
 ## Git terminləri
 
-- repository: Layihənin kodu və tarixçəsi.
+- repository: Kod və tarixçə.
 - clone: GitHub surətini kompüterə almaq.
 - branch: Ayrı iş xətti.
 - commit: Tarixçəyə yadda saxlanmış dəyişiklik.
 - staging: git add ilə commit seçimi.
-- push: Lokal commit-i GitHub-a göndərmək.
+- push: Commit-i GitHub-a göndərmək.
 - pull: GitHub dəyişikliklərini almaq.
 - merge: Branch-ləri birləşdirmək.
 - Pull Request: Review və merge təklifi.
-- conflict: Eyni sətirlərdə zidd dəyişiklik.
+- conflict: Zidd dəyişiklik.
 - origin: GitHub remote adı.
 - main: Production əsas branch-i.
 - develop: İnteqrasiya branch-i.
-- feature branch: Bir tapşırıq üçün branch.
+- feature branch: Bir tapşırıq branch-i.
 
 ## Komanda bölgüsü
 
@@ -195,72 +258,77 @@ GitHub-da feature branch-dən develop-ə Pull Request aç. main və develop-ə b
 | Developer | Məsuliyyət |
 |---|---|
 | Developer 1 — Backend & Database Lead | Authentication, models, migrations, security və take/put logic. |
-| Developer 2 — Frontend & PWA Lead | Blade/Livewire UI, responsive design, PWA və QR scanning interface. |
+| Developer 2 — Frontend & PWA Lead | Blade/Livewire UI, responsive design, PWA və QR interface. |
 | Developer 3 — Notification & Gamification | Wishlist, events/listeners, reminders, notifications, Coin/XP və challenges. |
-| Developer 4 — Junior Full-Stack | BookPoint CRUD, sticker generator/activation, Add Book flow və integration tests. |
+| Developer 4 — Junior Full-Stack | BookPoint CRUD, sticker activation, Add Book flow və integration tests. |
 
-Migration, model və event contract dəyişikliklərini əvvəlcədən razılaşdırın.
+Migration və event contract dəyişikliklərini əvvəlcədən razılaşdırın.
 
 ## Codex ilə işləmək
 
-Codex-də C:\Users\acer\Desktop\PHPProject\bookloop qovluğunu aç. Təhlükəsiz prompt:
+Codex-də C:\Users\acer\Desktop\PHPProject\bookloop qovluğunu açın. Prompt:
 
-    BookLoop repository-də işləyirsən.
     Əvvəl repository-ni və docs/ sənədlərini inspect et.
     Yalnız verdiyim feature üzərində işləy; əlaqəsiz fayllara toxunma.
     Mövcud architecture-a hörmət et, test əlavə et və nəticəni report et.
-    Commit və push etmə. .env, secret, vendor, node_modules və lokal database fayllarını dəyişmə.
+    Commit və push etmə.
+    .env, secret, vendor, node_modules və lokal database fayllarını dəyişmə.
     Destructive Git command işlətmə.
 
-AI-generated kodu review və test etmədən commit etmə.
+AI-generated kodu review və test etmədən commit etməyin.
 
-## Test və troubleshooting
+## Test və yoxlamalar
 
-Əsas yoxlamalar:
-
-    php artisan test
-    php artisan route:list
+    envkit artisan test
+    envkit artisan route:list
     npm run build
     git status
 
 PASS uğur, FAIL xəta, DEPR isə test keçsə də köhnələ biləcək API/constant deməkdir.
 
-- npm ERR! enoent və package.json missing: düzgün repository qovluğuna keç, package.json yoxla, npm install işlə.
-- php/composer/npm not recognized: proqramı quraşdır, PATH-i yoxla, PowerShell-i yenidən aç.
-- bootstrap/cache must be present and writable: New-Item -ItemType Directory -Force bootstrap\cache işlə.
-- SQLite file does not exist: New-Item -ItemType File -Force database\database.sqlite işlə.
-- Vite manifest not found: npm install və npm run build işlə.
-- APP_KEY missing: Copy-Item .env.example .env; php artisan key:generate.
-- database connection refused: PostgreSQL service və .env bağlantı dəyərlərini yoxla.
-- migrations işləməyib: php artisan optimize:clear; php artisan migrate --seed.
-- port 8000 doludur: php artisan serve --port=8001.
-- Git authentication failed: collaborator dəvətini və GitHub token/Git Credential Manager-i yoxla.
-- Merge conflict: git status işlət, conflict marker-larını həll et, sonra git add <fayl> və commit et.
-- Səhvən secret stage olunub: git restore --staged .env database/database.sqlite; git status.
+## Xətalar və həllər
+
+- envkit not recognized: EnvKit quraşdırılmayıb və ya PATH-də deyil; IT-dən təsdiqlənmiş installer alın.
+- envkit php/composer işləmir: envkit status, site registration və project root-u yoxlayın.
+- node/npm not recognized: Node.js LTS-i ayrıca quraşdırın.
+- package.json missing: düzgün root-a keçin və foundation merge vəziyyətini yoxlayın.
+- bootstrap/cache writable deyil: New-Item -ItemType Directory -Force bootstrap\cache işlədin.
+- APP_KEY missing: Copy-Item .env.example .env; envkit artisan key:generate.
+- Vite manifest not found: npm install; npm run build.
+- database connection refused: envkit start postgres; envkit status; .env dəyərlərini yoxlayın.
+- SQLite file yoxdur: New-Item -ItemType File -Force database\database.sqlite.
+- migrations işləməyib: envkit artisan optimize:clear; envkit artisan migrate --seed.
+- port 8000 doludur: envkit artisan serve --port=8001.
+- site görünmür: envkit sites-link ...; envkit apply.
+- Git authentication failed: collaborator, remote və Credential Manager-i yoxlayın.
+- merge conflict: git status, marker-ları həll et, git add <fayl>, sonra commit.
+- .env stage olunub: git restore --staged .env database/database.sqlite.
 
 ## Təhlükəsizlik
 
-- .env, credential və secret commit etmə.
-- vendor, node_modules, logs, caches və lokal database commit etmə.
-- main/develop-ə force push etmə.
-- Anlamadan destructive database/Git command işlətmə.
-- Testsiz kodu merge etmə.
-- Commit-dən əvvəl git status və git diff --staged yoxla.
-- Production database-də migrate:fresh işlətmə.
-- AI-generated kodu review və test etmədən qəbul etmə.
+- .env, credential, password və token commit etməyin.
+- vendor, node_modules, logs, caches və lokal database commit etməyin.
+- main/develop-ə force push etməyin.
+- Anlamadan destructive database/Git command işlətməyin.
+- Testsiz kodu merge etməyin.
+- Commit-dən əvvəl git status və git diff --staged yoxlayın.
+- Production database-də migrate:fresh işlətməyin.
+- EnvKit-in secret/config fayllarını repository-yə köçürməyin.
 
 ## İlk gün checklist
 
-- [ ] GitHub access işləyir.
-- [ ] Git, PHP, Composer, Node.js/npm quraşdırılıb.
-- [ ] Repository clone edilib.
-- [ ] develop checkout və pull edilib.
-- [ ] composer install tamamlanıb.
+- [ ] Git və VS Code quraşdırılıb.
+- [ ] EnvKit quraşdırılıb: envkit --version.
+- [ ] envkit status-da PHP və PostgreSQL görünür.
+- [ ] Node.js və npm ayrıca quraşdırılıb.
+- [ ] Repository clone edilib, develop checkout edilib.
+- [ ] BookLoop sites-link edilib.
+- [ ] envkit composer install tamamlanıb.
 - [ ] npm install tamamlanıb.
 - [ ] .env və APP_KEY hazırdır.
 - [ ] Database konfiqurasiya edilib.
-- [ ] php artisan migrate --seed keçib.
-- [ ] php artisan test keçib.
+- [ ] envkit artisan migrate --seed keçib.
+- [ ] envkit artisan test keçib.
 - [ ] npm run build keçib.
 - [ ] Sayt brauzerdə açılır.
 - [ ] İlk feature branch yaradılıb.
@@ -274,4 +342,4 @@ PASS uğur, FAIL xəta, DEPR isə test keçsə də köhnələ biləcək API/cons
 - [Developer setup](docs/developer-setup.md)
 - [Team ownership](docs/ownership.md)
 
-Foundation faylları develop-də görünmürsə foundation Pull Request-inin merge vəziyyətini yoxla.
+Foundation faylları develop-də görünmürsə, foundation Pull Request-inin merge vəziyyətini yoxlayın.
