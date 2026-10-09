@@ -29,3 +29,26 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+
+# BookLoop foundation additions
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/auth.json
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+
+/database/database.sqlite
+
+/bootstrap/cache/*.php
+/storage/framework/views/*
+/storage/logs/*
+!/bootstrap/cache/.gitignore
+!/storage/framework/views/.gitignore
+!/storage/logs/.gitignore
+/database/database.sqlite

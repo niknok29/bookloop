@@ -1,0 +1,1 @@
+<div><label for="{{ $name }}" class="mb-1 block text-sm font-medium">{{ $label }}</label><input id="{{ $name }}" name="{{ $name }}" type="{{ $type }}" value="{{ old($name) }}" required class="w-full rounded-lg border-slate-300 px-3 py-2 shadow-sm">@error($name)<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror</div>
